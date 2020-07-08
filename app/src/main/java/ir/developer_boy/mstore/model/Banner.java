@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class Banner {
-//vf
+
     @Expose
     private Long id;
     @Expose
