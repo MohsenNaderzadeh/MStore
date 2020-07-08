@@ -21,4 +21,8 @@ public class RetrofitSingleTone {
         }
        return retrofit;
     }
+
+    private RetrofitSingleTone(){
+
+    }
 }
