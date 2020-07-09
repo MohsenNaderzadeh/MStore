@@ -7,6 +7,10 @@ import com.google.gson.annotations.SerializedName;
 @SuppressWarnings("unused")
 public class Product {
 
+    public static final int SORT_LATEST=0;
+    public static final int SORT_POPULAR=1;
+    public static final int SORT_PRICE_HIGH_TO_LOW=2;
+    public static final int SORT_PRICE_LOW_TO_HIGH=3;
     @Expose
     private Long discount;
     @Expose
