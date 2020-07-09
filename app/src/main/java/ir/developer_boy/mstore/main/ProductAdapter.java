@@ -21,9 +21,6 @@ import ir.developer_boy.mstore.utils.PriceConverter;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList=new ArrayList<>();
-
-
-
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
