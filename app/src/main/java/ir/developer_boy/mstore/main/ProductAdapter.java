@@ -1,5 +1,6 @@
 package ir.developer_boy.mstore.main;
 
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,16 +16,19 @@ import java.util.List;
 
 import ir.developer_boy.mstore.R;
 import ir.developer_boy.mstore.model.Product;
+import ir.developer_boy.mstore.utils.PriceConverter;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList=new ArrayList<>();
 
 
+
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ProductViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product,parent,false));
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product,parent,false);
+        return new ProductViewHolder(view);
     }
 
     @Override
@@ -56,8 +60,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         {
             Picasso.get().load(product.getImage()).into(productImage);
             productTitle.setText(product.getTitle());
-            productPrevPrice.setText(String.valueOf(product.getPreviousPrice()));
-            productPrice.setText(String.valueOf(product.getPrice()));
+            productPrevPrice.setText(PriceConverter.convert(product.getPreviousPrice()));
+            productPrevPrice.setPaintFlags(productPrevPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
+            productPrice.setText(PriceConverter.convert(product.getPrice()));
         }
+    }
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+        notifyDataSetChanged();
     }
 }
