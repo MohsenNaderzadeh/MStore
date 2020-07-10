@@ -52,7 +52,7 @@
             android:layout_marginRight="8dp"
             android:textColor="@android:color/white"/>
     </RelativeLayout>
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:weightSum="4"
@@ -92,7 +92,6 @@
                 />
         </LinearLayout>
 
-
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -130,6 +129,9 @@
                 android:id="@+id/rv_main_latest_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:clipToPadding="false"
                 android:minHeight="140dp"/>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -148,9 +150,12 @@
                     android:text="مشاهده همه"/>
             </RelativeLayout>
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_main_latest_popular_products"
+                android:id="@+id/rv_main_popular_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:clipToPadding="false"
                 android:minHeight="140dp"/>
 
 
