@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 public interface ApiService {
 
     @GET("product/list")
-    Single<List<Product>> getProducts(@Query("sort") int sort);
+    Single<List<Product>> getProducts(@Query("sort") Integer sort);
 
     @GET("banner/slider")
     Single<List<Banner>> getBanners();
