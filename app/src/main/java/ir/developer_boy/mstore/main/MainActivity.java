@@ -1,7 +1,17 @@
 package ir.developer_boy.mstore.main;
 
+import android.content.Intent;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -12,12 +22,19 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mstore.R;
 import ir.developer_boy.mstore.base.BaseActivity;
+import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.api.MsSingleObserver;
+import ir.developer_boy.mstore.productlist.ProductListActivity;
 
 public class MainActivity extends BaseActivity {
 
     private MainViewModel mainViewModel;
+    private BannerAdapter bannerAdapter;
+    private ProductAdapter latestproductAdapter;
+    private ProductAdapter popularproductAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,19 +51,74 @@ public class MainActivity extends BaseActivity {
                 .subscribe(new MsSingleObserver<List<Product>>(compositeDisposable) {
                     @Override
                     public void onSuccess(List<Product> products) {
-
+                        latestproductAdapter.setProductList(products);
                     }
                 });
+        mainViewModel.popularProducts()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MsSingleObserver<List<Product>>(compositeDisposable) {
+                    @Override
+                    public void onSuccess(List<Product> products) {
+                        popularproductAdapter.setProductList(products);
+                    }
+                });
+
+        mainViewModel.banners()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MsSingleObserver<List<Banner>>(compositeDisposable) {
+                    @Override
+                    public void onSuccess(List<Banner> banners) {
+                        bannerAdapter.setBannerList(banners);
+                    }
+                });
+
     }
 
     private void setUpViews() {
+
+        TextView viewAllLatestProducts=findViewById(R.id.tv_main_viewAllLatestProducts);
+        TextView viewAllPopularProducts=findViewById(R.id.tv_main_viewAllPopularProducts);
+
+        RecyclerView latestProductsRv=findViewById(R.id.rv_main_latest_products);
+        latestProductsRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true));
+        latestproductAdapter=new ProductAdapter();
+        latestProductsRv.setAdapter(latestproductAdapter);
+
+        RecyclerView popularProductsRv=findViewById(R.id.rv_main_popular_products);
+        popularProductsRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true));
+        popularproductAdapter=new ProductAdapter();
+        popularProductsRv.setAdapter(popularproductAdapter);
+
+        RecyclerView bannersRv=findViewById(R.id.rv_main_banners);
+        bannersRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true));
+        SnapHelper snapHelper=new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(bannersRv);
+        bannerAdapter=new BannerAdapter();
+        bannersRv.setAdapter(bannerAdapter);
+
+        viewAllLatestProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.EXTRA_KEY_SORT_TYPE,0);
+                startActivity(intent);
+            }
+        });
+        viewAllPopularProducts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, ProductListActivity.class);
+                intent.putExtra(ProductListActivity.EXTRA_KEY_SORT_TYPE,1);
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
     public int getCoordinatetorLayoutId() {
         return R.id.main_CoordinatorLayout;
     }
-
-
-
 }
