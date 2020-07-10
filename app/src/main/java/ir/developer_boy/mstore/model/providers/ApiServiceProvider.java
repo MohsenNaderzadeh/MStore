@@ -16,4 +16,7 @@ public class ApiServiceProvider {
         }
         return apiService;
     }
+    private ApiServiceProvider(){
+
+    }
 }
