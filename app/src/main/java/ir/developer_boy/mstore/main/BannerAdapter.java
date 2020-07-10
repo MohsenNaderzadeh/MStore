@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.inthecheesefactory.thecheeselibrary.widget.AdjustableImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,8 +23,10 @@ public class BannerAdapter extends RecyclerView.Adapter<BannerAdapter.BannerView
     @NonNull
     @Override
     public BannerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ImageView imageView=new ImageView(parent.getContext());
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        AdjustableImageView imageView=new AdjustableImageView(parent.getContext());
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
         imageView.setAdjustViewBounds(true);
         return new BannerViewHolder(imageView);
     }
