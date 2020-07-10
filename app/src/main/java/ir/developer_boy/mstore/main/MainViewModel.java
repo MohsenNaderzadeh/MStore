@@ -3,13 +3,13 @@ package ir.developer_boy.mstore.main;
 import java.util.List;
 
 import io.reactivex.Single;
+import ir.developer_boy.mstore.base.BaseViewModel;
 import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.api.ApiService;
 import ir.developer_boy.mstore.model.providers.ApiServiceProvider;
 
-public class MainViewModel {
-    private ApiService apiService= ApiServiceProvider.getApiService();
+public class MainViewModel extends BaseViewModel {
 
 
     public Single<List<Product>> latestProducts(){
