@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".productlist.ProductListActivity"></activity>
+        <activity android:name=".auth.AuthenticationActivity"></activity>
+        <activity android:name=".productlist.ProductListActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
