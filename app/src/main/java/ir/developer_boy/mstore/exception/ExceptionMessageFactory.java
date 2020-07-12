@@ -1,7 +1,6 @@
 package ir.developer_boy.mstore.exception;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 
@@ -16,6 +15,8 @@ public class ExceptionMessageFactory {
         {
             switch (((HttpException) throwable).code())
             {
+                case 400:
+                case 401:
                 case 422:
                     Gson gson=new Gson();
                     try {
