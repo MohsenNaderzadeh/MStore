@@ -23,7 +23,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void ShowSnackBarMessage(String message){
-        Snackbar.make(findViewById(getCoordinatetorLayoutId()),message,Snackbar.LENGTH_LONG).show();
+
+        Snackbar.make(findViewById(getCoordinatetorLayoutId()), message, Snackbar.LENGTH_LONG).show();
+
     }
 
     @Override
