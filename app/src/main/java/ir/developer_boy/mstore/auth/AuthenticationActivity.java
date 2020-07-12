@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,9 @@ public class AuthenticationActivity extends BaseActivity {
         tv_auth_change_auth = findViewById(R.id.tv_auth_changeAuthenticationMode);
         authenticationViewModel = new AuthenticationViewModel();
         Progressbar = findViewById(R.id.ll_auth_progressbar);
+
+        ImageView iv_auth_back = findViewById(R.id.iv_auth_back);
+
         tv_auth_change_auth.setOnClickListener(v -> authenticationViewModel.OnAuthenticationChangeModeBtnClicked());
         btn_auth_authentication.setOnClickListener(v ->
         {
@@ -81,6 +85,7 @@ public class AuthenticationActivity extends BaseActivity {
                         }
                     });
         });
+        iv_auth_back.setOnClickListener(v -> finish());
 
     }
 
