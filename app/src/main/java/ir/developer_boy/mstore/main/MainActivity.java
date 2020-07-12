@@ -1,26 +1,21 @@
 package ir.developer_boy.mstore.main;
 
 import android.content.Intent;
-import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
-import io.reactivex.Scheduler;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mstore.R;
+import ir.developer_boy.mstore.auth.AuthenticationActivity;
 import ir.developer_boy.mstore.base.BaseActivity;
 import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.Product;
@@ -33,7 +28,7 @@ public class MainActivity extends BaseActivity {
     private BannerAdapter bannerAdapter;
     private ProductAdapter latestproductAdapter;
     private ProductAdapter popularproductAdapter;
-
+    private ImageView iv_main_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +75,7 @@ public class MainActivity extends BaseActivity {
 
         TextView viewAllLatestProducts=findViewById(R.id.tv_main_viewAllLatestProducts);
         TextView viewAllPopularProducts=findViewById(R.id.tv_main_viewAllPopularProducts);
-
+        ImageView iv_main_cart = findViewById(R.id.iv_main_cart);
         RecyclerView latestProductsRv=findViewById(R.id.rv_main_latest_products);
         latestProductsRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true));
         latestproductAdapter=new ProductAdapter();
@@ -114,6 +109,13 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        iv_main_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -121,4 +123,6 @@ public class MainActivity extends BaseActivity {
     public int getCoordinatetorLayoutId() {
         return R.id.main_CoordinatorLayout;
     }
+
+
 }
