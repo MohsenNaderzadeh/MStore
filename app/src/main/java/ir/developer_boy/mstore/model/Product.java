@@ -1,11 +1,14 @@
 
 package ir.developer_boy.mstore.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
-public class Product {
+public class Product implements Parcelable {
 
     public static final int SORT_LATEST=0;
     public static final int SORT_POPULAR=1;
@@ -13,8 +16,17 @@ public class Product {
     public static final int SORT_PRICE_LOW_TO_HIGH=3;
     @Expose
     private Long discount;
-    @Expose
-    private Long id;
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
     @Expose
     private String image;
     @SerializedName("previous_price")
@@ -34,12 +46,10 @@ public class Product {
         this.discount = discount;
     }
 
-    public Long getId() {
-        return id;
-    }
+    @Expose
+    private int id;
 
-    public void setId(Long id) {
-        this.id = id;
+    public Product() {
     }
 
     public String getImage() {
@@ -82,4 +92,37 @@ public class Product {
         this.title = title;
     }
 
+    protected Product(Parcel in) {
+        this.discount = (Long) in.readValue(Long.class.getClassLoader());
+        this.id = (int) in.readValue(Long.class.getClassLoader());
+        this.image = in.readString();
+        this.previousPrice = (Long) in.readValue(Long.class.getClassLoader());
+        this.price = (Long) in.readValue(Long.class.getClassLoader());
+        this.status = (Long) in.readValue(Long.class.getClassLoader());
+        this.title = in.readString();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.discount);
+        dest.writeValue(this.id);
+        dest.writeString(this.image);
+        dest.writeValue(this.previousPrice);
+        dest.writeValue(this.price);
+        dest.writeValue(this.status);
+        dest.writeString(this.title);
+    }
 }
