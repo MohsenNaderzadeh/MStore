@@ -5,7 +5,6 @@ import org.greenrobot.eventbus.EventBus;
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import ir.developer_boy.mstore.base.BaseActivity;
 import ir.developer_boy.mstore.exception.ExceptionMessageFactory;
 
 public abstract class MsSingleObserver<T> implements SingleObserver<T> {
