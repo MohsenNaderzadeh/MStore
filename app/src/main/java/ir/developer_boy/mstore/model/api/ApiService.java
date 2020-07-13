@@ -1,12 +1,16 @@
 package ir.developer_boy.mstore.model.api;
 
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import io.reactivex.Single;
 import ir.developer_boy.mstore.model.Banner;
+import ir.developer_boy.mstore.model.Comment;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.SuccessResponse;
 import ir.developer_boy.mstore.model.Token;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -34,4 +38,12 @@ public interface ApiService {
     @POST("user/register")
     Single<SuccessResponse> registerUser(@Field("email") String username,
                                          @Field("password") String password);
+
+
+    @GET("comment/list")
+    Single<List<Comment>> getComments(@Query("product_id") int product_id);
+
+
+    @POST("comment/add")
+    Single<Comment> submitNewComment(@Body JsonObject body);
 }
