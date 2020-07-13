@@ -1,5 +1,6 @@
 package ir.developer_boy.mstore.main;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ir.developer_boy.mstore.R;
+import ir.developer_boy.mstore.details.ProductDetails;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.utils.PriceConverter;
 
@@ -60,6 +62,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productPrevPrice.setText(PriceConverter.convert(product.getPreviousPrice()));
             productPrevPrice.setPaintFlags(productPrevPrice.getPaintFlags()| Paint.STRIKE_THRU_TEXT_FLAG);
             productPrice.setText(PriceConverter.convert(product.getPrice()));
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(itemView.getContext(), ProductDetails.class);
+                intent.putExtra(ProductDetails.EXTRA_PRODUCT_KEY, product);
+                itemView.getContext().startActivity(intent);
+            });
         }
     }
     public void setProductList(List<Product> productList) {
