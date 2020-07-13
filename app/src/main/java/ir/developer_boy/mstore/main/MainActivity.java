@@ -37,6 +37,7 @@ public class MainActivity extends BaseActivity {
         mainViewModel=new MainViewModel();
         setUpViews();
         observe();
+
     }
 
     private void observe() {
