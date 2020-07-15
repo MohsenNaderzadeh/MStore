@@ -79,6 +79,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
         EmptyState = findViewById(R.id.frame_cart_empty_State);
         cartViewModel = new CartViewModel();
         tv_cart_payable_cart = findViewById(R.id.tv_cart_payable_cart);
+        gotoPurhchaseDetails = findViewById(R.id.tv_purchase_details);
     }
 
     @Override
