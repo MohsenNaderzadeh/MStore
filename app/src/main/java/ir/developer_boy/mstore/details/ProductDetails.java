@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -19,6 +21,7 @@ import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mstore.R;
 import ir.developer_boy.mstore.base.BaseActivity;
 import ir.developer_boy.mstore.details.addcomment.AddCommentDialog;
+import ir.developer_boy.mstore.model.AddToCartResponse;
 import ir.developer_boy.mstore.model.Comment;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.api.MsSingleObserver;
@@ -40,6 +43,7 @@ public class ProductDetails extends BaseActivity {
     private ProgressBar progressBar;
     private Product product;
     private CommentsAdapter commentsAdapter;
+    private ProgressBar pb_details_product_add_to_cart;
 
     private ProductDetailsViewModel productDetailsViewModel;
 
@@ -77,6 +81,26 @@ public class ProductDetails extends BaseActivity {
             AddCommentDialog addCommentDialog = AddCommentDialog.newInstance(product.getId());
             addCommentDialog.show(getSupportFragmentManager(), null);
         });
+
+        productAddToCartBtn.setOnClickListener(v -> {
+            productDetailsViewModel.AddProductToCart(product.getId())
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new MsSingleObserver<AddToCartResponse>(compositeDisposable) {
+                        @Override
+                        public void onSuccess(AddToCartResponse addToCartResponse) {
+                            EventBus.getDefault().post("محصول شما با موفقیت به سبد خرید شما اضافه شد");
+                        }
+                    });
+        });
+
+        compositeDisposable.add(productDetailsViewModel.getProgressbarAddTocart().subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aBoolean -> {
+                    pb_details_product_add_to_cart.setVisibility((aBoolean ? View.VISIBLE : View.GONE));
+                    productAddToCartBtn.setVisibility((aBoolean ? View.INVISIBLE : View.VISIBLE));
+                }));
+
     }
 
 
@@ -92,6 +116,9 @@ public class ProductDetails extends BaseActivity {
         commentsList = findViewById(R.id.rv_details_comments_list);
         productDetailsViewModel = new ProductDetailsViewModel();
         progressBar = findViewById(R.id.pb_details_comment);
+        pb_details_product_add_to_cart = findViewById(R.id.pb_details_product_add_to_cart);
+
+
         commentsAdapter = new CommentsAdapter();
 
         productTitleToolbar.setText(product.getTitle());
