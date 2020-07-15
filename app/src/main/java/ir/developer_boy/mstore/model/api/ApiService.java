@@ -5,7 +5,9 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import io.reactivex.Single;
+import ir.developer_boy.mstore.model.AddToCartResponse;
 import ir.developer_boy.mstore.model.Banner;
+import ir.developer_boy.mstore.model.CartModel;
 import ir.developer_boy.mstore.model.Comment;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.SuccessResponse;
@@ -46,4 +48,16 @@ public interface ApiService {
 
     @POST("comment/add")
     Single<Comment> submitNewComment(@Body JsonObject body);
+
+    @GET("cart/list")
+    Single<CartModel> getCart();
+
+    @POST("cart/add")
+    Single<AddToCartResponse> addToCart(@Body JsonObject productid);
+
+    @POST("cart/changeCount")
+    Single<AddToCartResponse> changeCartItemCount(@Body JsonObject CartItemIdAndCount);
+
+    @POST("cart/remove")
+    Single<SuccessResponse> removeCartItem(@Body JsonObject cartItemId);
 }
