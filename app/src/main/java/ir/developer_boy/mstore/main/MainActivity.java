@@ -15,8 +15,8 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mstore.R;
-import ir.developer_boy.mstore.auth.AuthenticationActivity;
 import ir.developer_boy.mstore.base.BaseActivity;
+import ir.developer_boy.mstore.cart.CartActivity;
 import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.api.MsSingleObserver;
@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity {
         iv_main_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AuthenticationActivity.class);
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
                 startActivity(intent);
             }
         });
