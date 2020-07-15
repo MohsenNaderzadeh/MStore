@@ -9,24 +9,13 @@ import com.google.gson.annotations.SerializedName;
 
 @SuppressWarnings("unused")
 public class Product implements Parcelable {
-
     public static final int SORT_LATEST=0;
     public static final int SORT_POPULAR=1;
     public static final int SORT_PRICE_HIGH_TO_LOW=2;
     public static final int SORT_PRICE_LOW_TO_HIGH=3;
+
     @Expose
     private Long discount;
-    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
-        @Override
-        public Product createFromParcel(Parcel source) {
-            return new Product(source);
-        }
-
-        @Override
-        public Product[] newArray(int size) {
-            return new Product[size];
-        }
-    };
     @Expose
     private String image;
     @SerializedName("previous_price")
@@ -37,15 +26,6 @@ public class Product implements Parcelable {
     private Long status;
     @Expose
     private String title;
-
-    public Long getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Long discount) {
-        this.discount = discount;
-    }
-
     @Expose
     private int id;
 
@@ -60,9 +40,17 @@ public class Product implements Parcelable {
         this.image = image;
     }
 
-    public Long getPreviousPrice() {
-        return previousPrice;
-    }
+    public static final Parcelable.Creator<Product> CREATOR = new Parcelable.Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel source) {
+            return new Product(source);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public void setPreviousPrice(Long previousPrice) {
         this.previousPrice = previousPrice;
@@ -92,6 +80,22 @@ public class Product implements Parcelable {
         this.title = title;
     }
 
+    public Long getPreviousPrice() {
+        return price + discount;
+    }
+
+    public Long getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Long discount) {
+        this.discount = discount;
+    }
+
+    public int getId() {
+        return id;
+    }
+
     protected Product(Parcel in) {
         this.discount = (Long) in.readValue(Long.class.getClassLoader());
         this.id = (int) in.readValue(Long.class.getClassLoader());
@@ -102,13 +106,7 @@ public class Product implements Parcelable {
         this.title = in.readString();
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public int describeContents() {
@@ -124,5 +122,9 @@ public class Product implements Parcelable {
         dest.writeValue(this.price);
         dest.writeValue(this.status);
         dest.writeString(this.title);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
