@@ -27,7 +27,8 @@
                 app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/tv_cart_title"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="4dp"
@@ -35,6 +36,20 @@
                 android:text="سبد خرید"
                 android:textColor="@android:color/white"
                 android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_cart_cartItemCount_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_toLeftOf="@id/tv_cart_title"
+                android:background="@drawable/shape_badge_circle"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12dp"
+                android:visibility="gone"
+                tools:text="1" />
         </RelativeLayout>
     </android.support.design.widget.AppBarLayout>
 
