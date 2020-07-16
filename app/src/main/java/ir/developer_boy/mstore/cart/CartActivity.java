@@ -7,6 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mstore.R;
@@ -28,6 +32,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
     private View EmptyState;
     private TextView tv_cart_payable_cart;
     private TextView gotoPurhchaseDetails;
+    private TextView tv_cart_cartItemCount_badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
                 .subscribe(new MsSingleObserver<CartModel>(compositeDisposable) {
                     @Override
                     public void onSuccess(CartModel cartModel) {
+
+                        CartItemCountContainer.update(cartModel.getCartItems().size());
+                        EventBus.getDefault().post(new OnCartItemCountChanged(cartModel.getCartItems().size()));
                         if (cartModel.getCartItems().isEmpty()) {
                             EmptyState.setVisibility(View.VISIBLE);
                         } else {
@@ -80,6 +88,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
         cartViewModel = new CartViewModel();
         tv_cart_payable_cart = findViewById(R.id.tv_cart_payable_cart);
         gotoPurhchaseDetails = findViewById(R.id.tv_purchase_details);
+        tv_cart_cartItemCount_badge = findViewById(R.id.tv_cart_cartItemCount_badge);
     }
 
     @Override
@@ -104,6 +113,10 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
                     public void onSuccess(SuccessResponse successResponse) {
                         cartAdapter.removeCartItem(cartItem);
                         getCartItems(false);
+                        int count = CartItemCountContainer.getCount();
+                        count -= 1;
+                        EventBus.getDefault().post(new OnCartItemCountChanged(count));
+
                     }
 
                     @Override
@@ -118,7 +131,6 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
 
     @Override
     public void OnCartItemCountChange(CartItem cartItem, int requestCount) {
-
         cartViewModel.ChangeCartItemCount(cartItem, requestCount)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -138,5 +150,27 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
                         cartAdapter.notifyItemChanged(cartItem);
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void OnCartItemCountChangedSubscriber(OnCartItemCountChanged oncartItemCountddChanged) {
+        updateCartItemCountBadge(OnCartItemCountChanged.getCount());
+    }
+
+
+    private void updateCartItemCountBadge(int count) {
+        if (count > 0) {
+            tv_cart_cartItemCount_badge.setVisibility(View.VISIBLE);
+            tv_cart_cartItemCount_badge.setText(String.valueOf(count));
+        } else {
+            tv_cart_cartItemCount_badge.setVisibility(View.GONE);
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCartItemCountBadge(CartItemCountContainer.getCount());
     }
 }
