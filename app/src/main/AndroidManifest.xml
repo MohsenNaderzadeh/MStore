@@ -14,7 +14,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".cart.CartActivity"></activity>
         <activity android:name=".details.ProductDetails" />
-        <activity android:name=".auth.AuthenticationActivity" />
+        <activity
+            android:name=".auth.AuthenticationActivity"
+            android:launchMode="singleInstance" />
         <activity android:name=".productlist.ProductListActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
