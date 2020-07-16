@@ -27,6 +27,7 @@ public class AuthenticationViewModel extends BaseViewModel {
         return tokensingle.doOnSuccess(
                 (token) -> {
                     userInfoManager.saveToken(token.getAccessToken(), token.getExpiresIn().toString(), token.getRefreshToken());
+                    userInfoManager.saveEmail(username);
                     TokenContainer.updateToken(token.getAccessToken());
                 }
         ).doOnEvent((token, throwable) -> {
