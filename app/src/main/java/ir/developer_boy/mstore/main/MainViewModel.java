@@ -5,9 +5,8 @@ import java.util.List;
 import io.reactivex.Single;
 import ir.developer_boy.mstore.base.BaseViewModel;
 import ir.developer_boy.mstore.model.Banner;
+import ir.developer_boy.mstore.model.CartItemsCount;
 import ir.developer_boy.mstore.model.Product;
-import ir.developer_boy.mstore.model.api.ApiService;
-import ir.developer_boy.mstore.model.providers.ApiServiceProvider;
 
 public class MainViewModel extends BaseViewModel {
 
@@ -27,6 +26,11 @@ public class MainViewModel extends BaseViewModel {
     }
     public Single<List<Banner>> banners(){
         return  apiService.getBanners();
+    }
+
+
+    public Single<CartItemsCount> getCartItemsCount() {
+        return apiService.getCartItemCount();
     }
 
 }
