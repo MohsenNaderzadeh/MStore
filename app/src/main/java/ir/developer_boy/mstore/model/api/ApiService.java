@@ -7,6 +7,7 @@ import java.util.List;
 import io.reactivex.Single;
 import ir.developer_boy.mstore.model.AddToCartResponse;
 import ir.developer_boy.mstore.model.Banner;
+import ir.developer_boy.mstore.model.CartItemsCount;
 import ir.developer_boy.mstore.model.CartModel;
 import ir.developer_boy.mstore.model.Comment;
 import ir.developer_boy.mstore.model.Product;
@@ -60,4 +61,8 @@ public interface ApiService {
 
     @POST("cart/remove")
     Single<SuccessResponse> removeCartItem(@Body JsonObject cartItemId);
+
+
+    @GET("cart/count")
+    Single<CartItemsCount> getCartItemCount();
 }
