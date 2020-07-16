@@ -43,4 +43,13 @@ public class UserInfoManager {
     public String getEmail() {
         return sharedPreferences.getString(EXTRA_KEY_EMAIL, null);
     }
+
+
+    public void saveEmail(String email) {
+        sharedPreferences.edit().putString(EXTRA_KEY_EMAIL, email).apply();
+    }
+
+    public void clear() {
+        sharedPreferences.edit().clear().apply();
+    }
 }
