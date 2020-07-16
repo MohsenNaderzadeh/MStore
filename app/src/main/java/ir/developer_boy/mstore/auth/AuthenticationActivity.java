@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -80,6 +82,7 @@ public class AuthenticationActivity extends BaseActivity {
                     .subscribe(new MsCompeletableObserver(compositeDisposable) {
                         @Override
                         public void onComplete() {
+                            EventBus.getDefault().post(new OnUserAuthenticated());
                             Toast.makeText(AuthenticationActivity.this, "خوش آمدید", Toast.LENGTH_LONG).show();
                             finish();
                         }
