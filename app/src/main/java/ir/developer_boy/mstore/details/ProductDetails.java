@@ -20,6 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import ir.developer_boy.mstore.R;
 import ir.developer_boy.mstore.base.BaseActivity;
+import ir.developer_boy.mstore.cart.CartItemCountContainer;
+import ir.developer_boy.mstore.cart.OnCartItemCountChanged;
 import ir.developer_boy.mstore.details.addcomment.AddCommentDialog;
 import ir.developer_boy.mstore.model.AddToCartResponse;
 import ir.developer_boy.mstore.model.Comment;
@@ -89,7 +91,12 @@ public class ProductDetails extends BaseActivity {
                     .subscribe(new MsSingleObserver<AddToCartResponse>(compositeDisposable) {
                         @Override
                         public void onSuccess(AddToCartResponse addToCartResponse) {
+
+                            int count = CartItemCountContainer.getCount();
+                            count += 1;
+                            CartItemCountContainer.update(count);
                             EventBus.getDefault().post("محصول شما با موفقیت به سبد خرید شما اضافه شد");
+                            EventBus.getDefault().post(new OnCartItemCountChanged(count));
                         }
                     });
         });
