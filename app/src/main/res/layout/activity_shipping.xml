@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cordinate_shipping"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".shipping.ShippingActivity">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
+
+            <ImageView
+                android:id="@+id/iv_shipping_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="4dp"
+                android:layout_toLeftOf="@id/iv_shipping_back"
+                android:text="اطلاعات تحویل گیرنده و شیوه پرداخت"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/ed_shipping_firstname"
+                style="@style/EditTextDefault.Shipping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="نام" />
+
+            <EditText
+                android:id="@+id/ed_shipping_lastname"
+                style="@style/EditTextDefault.Shipping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="نام خانوادگی" />
+
+            <EditText
+                android:id="@+id/ed_shipping_postalCode"
+                style="@style/EditTextDefault.Shipping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="کد پستی"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/ed_shipping_phoneNumber"
+                style="@style/EditTextDefault.Shipping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="شماره تلفن همراه"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/ed_shipping_address"
+                style="@style/EditTextDefault.Shipping"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:gravity="top|right"
+                android:hint="آدرس تحویل گیرنده"
+                android:inputType="textMultiLine" />
+
+            <include
+                android:id="@+id/purchase_details_layout"
+                layout="@layout/item_purchases_details" />
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ProgressBar
+                    android:id="@+id/pb_shipping_ordersubmit"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/ll_shipping_paymentsmethodsbtncontainers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    android:weightSum="2">
+
+
+                    <Button
+                        android:id="@+id/btn_shipping_OnlinePayment"
+                        style="@style/ButtonDefault.Primary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="پرداخت اینترنتی" />
+
+                    <Button
+                        android:id="@+id/btn_shipping_CashOnDelivery"
+                        style="@style/ButtonDefault.Stroke"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:text="پرداخت در محل" />
+
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</android.support.design.widget.CoordinatorLayout>
