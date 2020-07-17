@@ -9,6 +9,7 @@ import ir.developer_boy.mstore.model.AddToCartResponse;
 import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.CartItemsCount;
 import ir.developer_boy.mstore.model.CartModel;
+import ir.developer_boy.mstore.model.CheckOutResponse;
 import ir.developer_boy.mstore.model.Comment;
 import ir.developer_boy.mstore.model.OrderSubmitResponse;
 import ir.developer_boy.mstore.model.Product;
@@ -70,4 +71,7 @@ public interface ApiService {
 
     @POST("order/submit")
     Single<OrderSubmitResponse> orderSubmit(@Body JsonObject OrderInfo);
+
+    @GET("order/checkout")
+    Single<CheckOutResponse> getCheckout(@Query("order_id") int query_id);
 }
