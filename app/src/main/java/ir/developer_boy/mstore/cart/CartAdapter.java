@@ -163,7 +163,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    public class PurhchaseDetailsViewHolder extends RecyclerView.ViewHolder {
+    public static class PurhchaseDetailsViewHolder extends RecyclerView.ViewHolder {
         private TextView TotalPrice;
         private TextView ShippingCost;
         private TextView payableCost;
