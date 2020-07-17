@@ -70,6 +70,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
                                     shippingActivity.putExtra(ShippingActivity.EXTRA_KEY_SHIPPING_COST, cartModel.getShippingCost());
                                     shippingActivity.putExtra(ShippingActivity.EXTRA_KEY_PAYABLE_PRICE, cartModel.getPayablePrice());
                                     startActivity(shippingActivity);
+                                    finish();
                                 }
                             });
                             EmptyState.setVisibility(View.GONE);
