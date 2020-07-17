@@ -1,5 +1,6 @@
 package ir.developer_boy.mstore.checkout;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import ir.developer_boy.mstore.R;
 import ir.developer_boy.mstore.base.BaseActivity;
 import ir.developer_boy.mstore.model.CheckOutResponse;
 import ir.developer_boy.mstore.model.api.MsSingleObserver;
+import ir.developer_boy.mstore.orders.OrderHistoryActivity;
 import ir.developer_boy.mstore.utils.PriceConverter;
 
 public class CheckOutActvity extends BaseActivity {
@@ -53,6 +55,14 @@ public class CheckOutActvity extends BaseActivity {
                 .subscribe(aBoolean -> {
                     progressBar.setVisibility(aBoolean ? View.VISIBLE : View.GONE);
                 }));
+
+        OrdersHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CheckOutActvity.this, OrderHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void setUpViews() {
