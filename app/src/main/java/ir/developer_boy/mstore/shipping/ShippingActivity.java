@@ -135,9 +135,12 @@ public class ShippingActivity extends BaseActivity {
                                     startActivity(Intent.createChooser(backgateway, "choose your browser..."));
                                     break;
                                 case CASH_ON_DELIVERY:
-                                    startActivity(new Intent(ShippingActivity.this, CheckOutActvity.class));
+                                    Intent intent = new Intent(ShippingActivity.this, CheckOutActvity.class);
+                                    intent.putExtra("order_id", String.valueOf(orderSubmitResponse.getOrderId()));
+                                    startActivity(intent);
                                     break;
                             }
+                            finish();
                         }
                     });
         } else {
