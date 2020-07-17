@@ -10,6 +10,7 @@ import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.CartItemsCount;
 import ir.developer_boy.mstore.model.CartModel;
 import ir.developer_boy.mstore.model.Comment;
+import ir.developer_boy.mstore.model.OrderSubmitResponse;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.SuccessResponse;
 import ir.developer_boy.mstore.model.Token;
@@ -65,4 +66,8 @@ public interface ApiService {
 
     @GET("cart/count")
     Single<CartItemsCount> getCartItemCount();
+
+
+    @POST("order/submit")
+    Single<OrderSubmitResponse> orderSubmit(@Body JsonObject OrderInfo);
 }
