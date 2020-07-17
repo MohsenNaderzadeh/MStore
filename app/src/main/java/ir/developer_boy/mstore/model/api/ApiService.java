@@ -11,6 +11,7 @@ import ir.developer_boy.mstore.model.CartItemsCount;
 import ir.developer_boy.mstore.model.CartModel;
 import ir.developer_boy.mstore.model.CheckOutResponse;
 import ir.developer_boy.mstore.model.Comment;
+import ir.developer_boy.mstore.model.Order;
 import ir.developer_boy.mstore.model.OrderSubmitResponse;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.SuccessResponse;
@@ -74,4 +75,8 @@ public interface ApiService {
 
     @GET("order/checkout")
     Single<CheckOutResponse> getCheckout(@Query("order_id") int query_id);
+
+
+    @GET("order/list")
+    Single<List<Order>> getOrderList();
 }
