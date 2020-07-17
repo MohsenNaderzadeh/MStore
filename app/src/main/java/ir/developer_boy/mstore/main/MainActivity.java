@@ -22,6 +22,7 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.holder.BadgeStyle;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,6 +45,7 @@ import ir.developer_boy.mstore.model.Banner;
 import ir.developer_boy.mstore.model.CartItemsCount;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.api.MsSingleObserver;
+import ir.developer_boy.mstore.orders.OrderHistoryActivity;
 import ir.developer_boy.mstore.productlist.ProductListActivity;
 
 public class MainActivity extends BaseActivity {
@@ -59,6 +61,7 @@ public class MainActivity extends BaseActivity {
     private ProductAdapter latestproductAdapter;
     private ProductAdapter popularproductAdapter;
     private ImageView iv_main_cart;
+    private ImageView iv_main_menu;
     private Drawer drawer;
     private UserInfoManager userInfoManager;
     private PrimaryDrawerItem authDrawerItem;
@@ -113,6 +116,19 @@ public class MainActivity extends BaseActivity {
         PrimaryDrawerItem OrderHistoryDrawerItem = new PrimaryDrawerItem().withName("سوابق سفارش")
                 .withIdentifier(ID_ORDER_HISTORY)
                 .withTypeface(drawerTypeface)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (TokenContainer.getToken() == null) {
+                            Toast.makeText(MainActivity.this, "ابتدا وارد حساب کاربری خود شوید", Toast.LENGTH_LONG).show();
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, OrderHistoryActivity.class);
+                            startActivity(intent);
+                        }
+
+                        return false;
+                    }
+                })
                 .withSelectable(false);
         OnAuthDrawerItemUpdate();
         drawer = new DrawerBuilder()
@@ -215,6 +231,15 @@ public class MainActivity extends BaseActivity {
 
         getCartItemCounts();
 
+        iv_main_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer != null) {
+                    drawer.openDrawer();
+                }
+            }
+        });
+
     }
 
 
@@ -264,6 +289,7 @@ public class MainActivity extends BaseActivity {
         iv_main_cart = findViewById(R.id.iv_main_cart);
         drawerTypeface = ResourcesCompat.getFont(this, R.font.regular);
         cartItemCountBadge = findViewById(R.id.tv_main_cartItemCount_badge);
+        iv_main_menu = findViewById(R.id.iv_main_menu);
 
         RecyclerView latestProductsRv=findViewById(R.id.rv_main_latest_products);
         latestProductsRv.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,true));
@@ -298,6 +324,7 @@ public class MainActivity extends BaseActivity {
         });
 
     }
+
 
     @Override
     public int getCoordinatetorLayoutId() {
