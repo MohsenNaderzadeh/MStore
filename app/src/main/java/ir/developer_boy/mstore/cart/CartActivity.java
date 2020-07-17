@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -22,6 +23,7 @@ import ir.developer_boy.mstore.model.CartModel;
 import ir.developer_boy.mstore.model.Product;
 import ir.developer_boy.mstore.model.SuccessResponse;
 import ir.developer_boy.mstore.model.api.MsSingleObserver;
+import ir.developer_boy.mstore.shipping.ShippingActivity;
 import ir.developer_boy.mstore.utils.PriceConverter;
 
 public class CartActivity extends BaseActivity implements CartAdapter.CartItemEventListener {
@@ -33,6 +35,9 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
     private TextView tv_cart_payable_cart;
     private TextView gotoPurhchaseDetails;
     private TextView tv_cart_cartItemCount_badge;
+    public static CartModel cartModel;
+    private Button btn_cart_order_submit;
+    private View iv_cart_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +56,22 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
                 .subscribe(new MsSingleObserver<CartModel>(compositeDisposable) {
                     @Override
                     public void onSuccess(CartModel cartModel) {
-
+                        CartActivity.cartModel = cartModel;
                         CartItemCountContainer.update(cartModel.getCartItems().size());
                         EventBus.getDefault().post(new OnCartItemCountChanged(cartModel.getCartItems().size()));
                         if (cartModel.getCartItems().isEmpty()) {
                             EmptyState.setVisibility(View.VISIBLE);
                         } else {
+                            btn_cart_order_submit.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent shippingActivity = new Intent(CartActivity.this, ShippingActivity.class);
+                                    shippingActivity.putExtra(ShippingActivity.EXTRA_KEY_TOTAL_PRICE, cartModel.getTotalPrice());
+                                    shippingActivity.putExtra(ShippingActivity.EXTRA_KEY_SHIPPING_COST, cartModel.getShippingCost());
+                                    shippingActivity.putExtra(ShippingActivity.EXTRA_KEY_PAYABLE_PRICE, cartModel.getPayablePrice());
+                                    startActivity(shippingActivity);
+                                }
+                            });
                             EmptyState.setVisibility(View.GONE);
                             tv_cart_payable_cart.setText(PriceConverter.convert(cartModel.getPayablePrice()));
                         }
@@ -89,6 +104,16 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartItemEv
         tv_cart_payable_cart = findViewById(R.id.tv_cart_payable_cart);
         gotoPurhchaseDetails = findViewById(R.id.tv_purchase_details);
         tv_cart_cartItemCount_badge = findViewById(R.id.tv_cart_cartItemCount_badge);
+        btn_cart_order_submit = findViewById(R.id.btn_cart_order_submit);
+        iv_cart_back = findViewById(R.id.iv_cart_back);
+
+
+        iv_cart_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
