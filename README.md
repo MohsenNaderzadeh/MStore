@@ -1,7 +1,7 @@
 # MStore
 This is a Store application with mvvm architecture and rxJava 
 
-#Used Technology:
+# Used Technology:
 RxJava/RxAndroid
 Picasso
 Gson
