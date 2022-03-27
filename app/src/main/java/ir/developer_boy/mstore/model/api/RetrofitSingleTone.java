@@ -29,7 +29,7 @@ public class RetrofitSingleTone {
                     })
                     .build();
             retrofit=new Retrofit.Builder()
-                    .baseUrl("http://expertdevelopers.ir/api/v1/")
+                    .baseUrl("")
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient)
